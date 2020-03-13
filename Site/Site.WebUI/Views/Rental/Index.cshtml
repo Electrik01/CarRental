@@ -1,0 +1,97 @@
+﻿@model Site.WebUI.Models.User.RentalModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/Car/RentalView.css" rel="stylesheet" />
+
+@using (Html.BeginForm())
+{
+    <h4>Rental</h4>
+    <hr />
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.Label("Car Name", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+                        <div class="col-12" id="search">
+                            @Html.EditorFor(model => model.CarName, new { htmlAttributes = new { @class = "form-control", @id = "cars" } })
+                            @Html.ValidationMessageFor(model => model.CarName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Date Rented", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+                        <div class="col-12">
+                            @Html.EditorFor(model => model.DateTimeRented, new { htmlAttributes = new { @class = "form-control", @id = "dates" } })
+                            @Html.ValidationMessageFor(model => model.DateTimeRented, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Date Returned", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+                        <div class="col-12">
+                            @Html.EditorFor(model => model.DateTimeReturned, new { htmlAttributes = new { @class = "form-control", @id = "datee" } })
+                            @Html.ValidationMessageFor(model => model.DateTimeReturned, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <input type="submit" value="Create" class="btn btn-success" id="btn_rental" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                <div id="car">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script>
+    $("#mydropdownlist").val("thevalue");
+    $('#cars').autocomplete({
+        source: function (request, response) {
+            $.getJSON('/Rental/AutoCompleteCar', { temp: $('#cars').val() }, function (data) {
+                response(data);
+            });
+        }
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        let xml = $('#search input').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Rental/Car',
+            data: { CarName: xml },
+            success: function (data) {
+                $("#car").html(data);
+            }
+        });
+    })
+</script>
+<script>
+    $('#search input').on('input', function () {
+        let xml = $('#search input').val();
+        $.ajax({
+            type: 'POST',
+            url: '/Rental/Car',
+            data: { CarName: xml },
+            success: function (data) {
+                $("#car").html(data);
+            }
+        });
+    });
+</script>
+@Scripts.Render("~/scripts/jquery-3.4.1.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")

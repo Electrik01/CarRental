@@ -1,0 +1,30 @@
+﻿@model Site.WebUI.Models.User.ProfileModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-header">
+        <h5>@Model.Name</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <p>Email: @Model.Email</p>
+                <p>Address @Model.Address</p>
+            </div>
+            <div class="col-12">
+                @if (Model.Rental != null)
+                {
+                <div class="card">
+                    <h6>@Model.Rental.CarName</h6>
+                    <p>@Model.Rental.Status</p>
+                    <p>Message: @Model.Rental.Message</p>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

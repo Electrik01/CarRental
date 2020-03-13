@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Site.WebUI.Models.User.RentalModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Orders</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientId)
+        </th>
+        <th>
+            @Html.DisplayName("Car Name")
+        </th>
+        <th>
+            @Html.DisplayName("Date Rented")
+        </th>
+        <th>
+            @Html.DisplayName("Date Returned")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CarName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTimeRented)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTimeReturned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("More", "More", new {id = item.Id},new {@class="btn btn-secondary"}) 
+        </td>
+    </tr>
+}
+
+</table>

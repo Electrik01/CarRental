@@ -1,0 +1,40 @@
+﻿@model Site.WebUI.Models.User.RentalModel
+
+@{
+    ViewBag.Title = "More";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>More</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    <h4>Car name: @Model.CarName</h4>
+    <h4>Client name: @ViewBag.Name</h4>
+    <h4>Date rented: @Model.DateTimeRented.ToShortDateString()</h4>
+    <h4>Date returned: @Model.DateTimeReturned.ToShortDateString()</h4>
+    <h4>Status: @Model.Status</h4>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="text" name="message" class="form-control" />
+            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="status" value="Confirm" class = "btn btn-success">
+            <input type="submit" name="status" value="Unconfirmed" class="btn btn-danger">
+        </div>
+    </div>
+</div>
+}

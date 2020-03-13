@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Site.WebUI.Models.User.CarViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<style>
+    .table{
+        min-width:960px;
+    }
+</style>
+<h2>Cars</h2>
+
+<p>
+    @Html.ActionLink("Add New", "Create",null, new { @class = "btn btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Name")
+        </th>
+        <th>
+            @Html.DisplayName("Transmission Type")
+        </th>
+        <th>
+            @Html.DisplayName("Fuel Type")
+        </th>
+        <th>
+            @Html.DisplayName("Price")
+        </th>
+        <th>
+            @Html.DisplayName("Fuel Consumption")
+        </th>
+        <th>
+            @Html.DisplayName("EngineCapacity")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransmissionType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FuelType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FuelConsumptionMin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EngineCapacity)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditCar", new { id = item.Id }, new { @class = "btn btn-secondary"})
+            @Html.ActionLink("Delete", "DeleteCar", new { id=item.Id }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

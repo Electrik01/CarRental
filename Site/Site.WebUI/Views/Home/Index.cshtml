@@ -1,0 +1,225 @@
+﻿@model Site.WebUI.Models.User.HomeModel
+<link href="~/Content/Car/CarView.css" rel="stylesheet" />
+<style>
+
+    h4 {
+        height: 60px;
+    }
+
+    .form-check {
+        margin: 20px;
+    }
+
+    #More {
+        color: white;
+        background-color: #000033;
+        border-radius: 10px;
+    }
+
+    @@media(max-width: 817px) {
+        .card {
+            min-width: 365px;
+            margin: auto;
+        }
+    }
+
+    @@media(max-width: 768px) {
+        .card {
+            min-width: 365px;
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    .logo_img img {
+        margin: 5%;
+    }
+
+    #sort {
+        margin-top: -5px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    #search {
+        margin-top: -5px;
+    }
+    #btn_more {
+        background-color: #000033;
+        border-color: #000033;
+        color:white;
+        font-size:20px;
+        margin:auto;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 d-inline-flex">
+            <label>Sort by: </label>
+            <select class="form-control" id="sort">
+                <option>Deffault</option>
+                <option>Name (descending) </option>
+                <option>Name (ascending)</option>
+                <option>Price (descending)</option>
+                <option>Price (ascending)</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <input type="text" id="search" class="form-control" placeholder="Search..." />
+        </div>
+        <div class="col-2">
+            <button class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#More" aria-expanded="false" aria-controls="collapseExample">
+                More
+            </button>
+        </div>
+    </div>
+    <form class="row collapse" id="More">
+        <div class="col-6">
+            <h5 class="text-center">Car type</h5>
+            @foreach (var item in Model.CarTypes)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="@item" id="CarType">
+                    <label class="form-check-label" for="CarType">
+                        @item
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="col-6">
+            <h5 class="text-center">Mark</h5>
+            @foreach (var item in Model.Marks)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="@item" id="Mark">
+                    <label class="form-check-label" for="Mark">
+                        @item
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="col-12 text-center">
+            <input type="button" value="Search" id="btn_more" />
+        </div>
+    </form>
+</div>
+<div id="cars">
+</div>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script>
+    $("#mydropdownlist").val("thevalue");
+    $('#search').autocomplete({
+        source: function (request, response) {
+            $.getJSON('/Rental/AutoCompleteCar', { temp: $('#search').val() }, function (data) {
+                response(data);
+            });
+        }
+    });
+
+</script>
+<script>
+    $("#btn_more").on('click', function () {
+        var ct_l = "", car_type = document.forms['More']['CarType'];
+        for (var i = 0, elm; elm = car_type[i]; i++) {
+            if (elm.checked) {
+                ct_l += elm.value;
+            }
+        }
+        var mark_l = "", mark = document.forms['More']['Mark'];
+        for (var i = 0, elm; elm = mark[i]; i++) {
+            if (elm.checked) {
+                mark_l += elm.value;
+            }
+        }
+        let search = document.getElementById("search").value;
+        var sort = document.getElementById("sort").value;
+        $.ajax({
+            type: 'POST',
+            url: '/Home/SortType',
+            data: { sortOrder: sort, carType: ct_l, mark: mark_l, search: search },
+            success: function (data) {
+                $("#cars").html(data);
+            }
+        });
+    });
+</script>
+<script>
+    $('#sort').on('input', function () {
+        var ct_l = "", car_type = document.forms['More']['CarType'];
+        for (var i = 0, elm; elm = car_type[i]; i++) {
+            if (elm.checked) {
+                ct_l += elm.value;
+            }
+        }
+        var mark_l = "", mark = document.forms['More']['Mark'];
+        for (var i = 0, elm; elm = mark[i]; i++) {
+            if (elm.checked) {
+                mark_l += elm.value;
+            }
+        }
+        let search = document.getElementById("search").value;
+        var sort = document.getElementById("sort").value;
+        $.ajax({
+            type: 'POST',
+            url: '/Home/SortType',
+            data: { sortOrder: sort, carType: ct_l, mark: mark_l, search: search },
+            success: function (data) {
+                $("#cars").html(data);
+            }
+        });
+
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        var ct_l = "", car_type = document.forms['More']['CarType'];
+        for (var i = 0, elm; elm = car_type[i]; i++) {
+            if (elm.checked) {
+                ct_l += elm.value;
+            }
+        }
+        var mark_l = "", mark = document.forms['More']['Mark'];
+        for (var i = 0, elm; elm = mark[i]; i++) {
+            if (elm.checked) {
+                mark_l += elm.value;
+            }
+        }
+        let search = document.getElementById("search").value;
+        var sort = document.getElementById("sort").value;
+        $.ajax({
+            type: 'POST',
+            url: '/Home/SortType',
+            data: { sortOrder: sort, carType: ct_l, mark: mark_l, search: search },
+            success: function (data) {
+                $("#cars").html(data);
+            }
+        });
+    })
+
+</script>
+<script>
+    $("#search").on('input', function () {
+        var ct_l = "", car_type = document.forms['More']['CarType'];
+        for (var i = 0, elm; elm = car_type[i]; i++) {
+            if (elm.checked) {
+                ct_l += elm.value;
+            }
+        }
+        var mark_l = "", mark = document.forms['More']['Mark'];
+        for (var i = 0, elm; elm = mark[i]; i++) {
+            if (elm.checked) {
+                mark_l += elm.value;
+            }
+        }
+        let search = document.getElementById("search").value;
+        var sort = document.getElementById("sort").value;
+        $.ajax({
+            type: 'POST',
+            url: '/Home/SortType',
+            data: { sortOrder: sort, carType: ct_l, mark: mark_l, search: search },
+            success: function (data) {
+                $("#cars").html(data);
+            }
+        });
+    });
+</script>

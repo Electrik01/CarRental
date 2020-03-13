@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Site.WebUI.Models.User.CarViewModel>
+@foreach (var car in Model)
+{
+    <div class="card justify-content-center">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-7">
+                <div class="card-img-top">
+                    @Html.Raw("<img class='card-img-top' id='car_img' src=\"data:image/jpeg;base64,"
+                                + Convert.ToBase64String(car.Picture) + "\" />")
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-5">
+                <h4>@car.Name</h4>
+                <div class="row" id="log">
+                    <div class="col-4 col-md-12 col-lg-12 col-xl-12">
+                        <img src="~/Content/images/oil.png" />
+                        <p>@car.FuelType</p>
+                    </div>
+                    <div class="col-3 col-md-12 col-lg-12 col-xl-12">
+                        <img src="~/Content/images/engine.png" />
+                        <p>@car.EngineCapacity</p>
+                    </div>
+                    <div class="col-5 col-md-12 col-lg-12 col-xl-12">
+                        <img src="~/Content/images/transmission.png" />
+                        <p>@car.TransmissionType</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Days</th>
+                            <th scope="col">1-2</th>
+                            <th scope="col">3-7</th>
+                            <th scope="col">8-29</th>
+                            <th scope="col">30+</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Cost</th>
+                            <td>@car.PriceList[0]</td>
+                            <td>@car.PriceList[1]</td>
+                            <td>@car.PriceList[2]</td>
+                            <td>@car.PriceList[3]</td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+        @Html.ActionLink("Rental", "Index", "Rental", new { carName = car.Name }, new { @class = "btn btn-secondary float-right", @id = "btn_rental" })
+    </div>
+}

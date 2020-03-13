@@ -1,0 +1,87 @@
+﻿@model Site.WebUI.Models.Manager.CarAddModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<style>
+    #text_lab {
+        height: 35px;
+        border-radius: 5px;
+        min-width: 100%;
+        padding: 5px;
+        background-color: lightgray;
+    }
+
+    input {
+        min-width: 100%;
+    }
+</style>
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("EditCar", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-row">
+        <hr />
+
+        <div class="form-group col-md-12 col-lg-12 col-el-12">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6 col-lg-6 col-el-6">
+            @Html.Label("Transmission Type", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.TransmissionType, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TransmissionType, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6 col-lg-6 col-el-6">
+            @Html.Label("Fuel Type", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.FuelType, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FuelType, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group col-md-6 col-lg-6 col-el-6">
+            @Html.Label("Mark", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.MarkS, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.MarkS, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-6 col-lg-6 col-el-6">
+            @Html.Label("Car Type", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.CarTypeS, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CarTypeS, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4 col-lg-4 col-el-4">
+            @Html.Label("Engine Capacity", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.EngineCapacity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EngineCapacity, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4 col-lg-4 col-el-4">
+            @Html.Label("Fuel Consumption", htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.FuelConsumptionMin, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FuelConsumptionMin, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4 col-lg-4 col-el-4">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-group-title text-center", @id = "text_lab" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6 col-lg-6 col-el-6">
+            <input type="file" name="uploadImage" id="uploadImage" />
+        </div>
+        <div class="form-group col-md-6 col-lg-6 col-el-6">
+            <input type="submit" value="Save" class="btn btn-success float-right" />
+        </div>
+    </div>
+}
+
+
